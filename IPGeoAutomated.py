@@ -10,7 +10,7 @@ ip = f.readlines()
 
 # For loop to request data for each IP
 for i in ip:
-    data = requests.get('https://api.ipgeolocation.io/ipgeo?apiKey=f80001219f4e463494bcfd2fb08b92a3&ip='+i).json()
+    data = requests.get('https://api.ipgeolocation.io/ipgeo?apiKey=API_TOKEN&ip='+i).json()
     pprint(data)
 
 # For use with a single IP entered by the user

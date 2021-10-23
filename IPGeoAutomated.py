@@ -15,13 +15,11 @@ def scopeQuery():
         if '/' in i:
             addrs = ipaddress.ip_network(i.replace("\n",'')) # Check for CIDR and remove lines
             for addr in addrs:
-                data = requests.get('https://api.ipgeolocation.io/ipgeo?apiKey=a8563127af3f479eb97d9b6ef34810ae&ip='+str(addr)).json()
+                data = requests.get('https://api.ipgeolocation.io/ipgeo?apiKey=API_TOKEN&ip='+str(addr)).json()
                 print(data)
         else:
-            #data = requests.get('https://api.ipgeolocation.io/ipgeo?apiKey=a8563127af3f479eb97d9b6ef34810ae&ip='+i).json()
-            #fwrite = open('scopedata.txt', 'w')
-            #fwrite.write = (data)
-            print ("skipped")
+            data = requests.get('https://api.ipgeolocation.io/ipgeo?apiKey=API_TOKEN&ip='+i).json()
+            print (data)
 
 scopeQuery()
 

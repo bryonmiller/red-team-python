@@ -1,27 +1,34 @@
 import requests # Requests allows for HTTP requests to be used in the program
 import ipaddress # For IP address manipulation
-from pprint import pprint # Pretty print formatting
-
-# Creating variable to hold the IP and asking user for input
-# ip = input("What IP would you like to check? ")
+import csv
 
 # Get IP(s) from file
-f = open("ips.txt","r")
-ip = f.readlines()
+with open('ips.txt', 'r') as ipf:
+        iplist = ipf.readlines()
 
-# For loop to request data for each IP
+# Open results file for writing and create csv writer
+sdf = open('scopedata.csv', 'w')
+csv_writer = csv.writer(sdf)
+
+# Retrieve API token (this file should be added to .gitignore)
+with open('apitoken.txt', 'r') as apitf:
+    apitoken = apitf.readlines()
+
+# Function to request data for each IP and write to csv
 def scopeQuery():
-    for i in ip:
-        if '/' in i:
-            addrs = ipaddress.ip_network(i.replace("\n",'')) # Check for CIDR and remove lines
+    print("Collecting data and writing to scopedata.txt. Please wait.")
+    for i in iplist:
+        if '/' in i: # Check for CIDR
+            addrs = ipaddress.ip_network(i.replace("\n",'')) # Generate network IPs and remove lines
             for addr in addrs:
-                data = requests.get('https://api.ipgeolocation.io/ipgeo?apiKey=API_TOKEN&ip='+str(addr)).json()
-                print(data)
+                data = requests.get('https://api.ipgeolocation.io/ipgeo?apiKey='+apitoken[0]+'&ip='+str(addr)).json()
+                csv_writer.writerow(data.values())
         else:
-            data = requests.get('https://api.ipgeolocation.io/ipgeo?apiKey=API_TOKEN&ip='+i).json()
-            print (data)
+            data = requests.get('https://api.ipgeolocation.io/ipgeo?apiKey='+apitoken[0]+'&ip='+i).json()
+            csv_writer.writerow(data.values())
 
 scopeQuery()
 
-# For use with a single IP entered by the user
-# print (requests.get('https://api.ipgeolocation.io/ipgeo?apiKey=API_TOKEN&ip='+ip).json())
+sdf.close() # Close the written data file
+
+print("Scope query complete. See scopedata.txt for results.")

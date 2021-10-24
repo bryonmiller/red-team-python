@@ -6,11 +6,11 @@ import csv
 with open('ips.txt', 'r') as ipf:
         iplist = ipf.readlines()
 
-# Open results file for writing and create csv writer
+# Open results file (added to .gitignore) for writing and create csv writer
 sdf = open('scopedata.csv', 'w')
 csv_writer = csv.writer(sdf)
 
-# Retrieve API token (this file should be added to .gitignore)
+# Retrieve API token (this file should also be added to .gitignore)
 with open('apitoken.txt', 'r') as apitf:
     apitoken = apitf.readlines()
 

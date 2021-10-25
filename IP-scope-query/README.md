@@ -17,3 +17,5 @@ Here are your IP addresses to check:
 For the Expert Task here are two networks in CIDR notation:
 20.128.0.0/16
 208.76.44.0/22
+
+API documentation link: https://ipgeolocation.io/documentation/ip-geolocation-api.html
